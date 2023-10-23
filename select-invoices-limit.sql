@@ -1,1 +1,1 @@
-SELECT * FROM invoices ORDER BY InvoiceDate LIMIT 15;
+SELECT * FROM invoices ORDER BY InvoiceDate DESC LIMIT 15;
