@@ -1,16 +1,25 @@
-WITH AllCountries AS (
-    SELECT Country FROM employees
-    UNION ALL
-    SELECT Country FROM customers
-    UNION ALL
-    SELECT BillingCountry AS Country FROM invoices
-)
-
 SELECT
     Country,
-	COUNT(*) AS Total,
-    (SELECT COUNT(*) FROM employees e WHERE e.Country = AllCountries.Country) AS Employees,
-	(SELECT COUNT(*) FROM customers c WHERE c.Country = AllCountries.Country) AS Customers,
-    (SELECT COUNT(*) FROM invoices i WHERE i.BillingCountry = AllCountries.Country) AS Invoices
-FROM AllCountries
-GROUP BY Country ORDER BY Country;
+    SUM(Total) AS Total,
+    SUM(Employees) AS Employees,
+    SUM(Customers) AS Customers,
+    SUM(Invoices) AS Invoices
+FROM (
+    SELECT Country, 0 AS Total, COUNT(*) AS Employees, 0 AS Customers, 0 AS Invoices
+    FROM employees
+    GROUP BY Country
+
+    UNION ALL
+
+    SELECT Country, 0 AS Total, 0 AS Employees, COUNT(*) AS Customers, 0 AS Invoices
+    FROM customers
+    GROUP BY Country
+
+    UNION ALL
+
+    SELECT BillingCountry AS Country, 0 AS Total, 0 AS Employees, 0 AS Customers, COUNT(*) AS Invoices
+    FROM invoices
+    GROUP BY BillingCountry
+) AS CombinedData
+GROUP BY Country
+ORDER BY Country;
