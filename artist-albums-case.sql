@@ -1,9 +1,9 @@
-SELECT a.Name AS Name, COUNT(al.AlbumId) AS NbAlbums,
-    CASE
-        WHEN COUNT(al.AlbumId) = 1 THEN 'Unproductive'
-        WHEN COUNT(al.AlbumId) > 1 AND COUNT(al.AlbumId) < 10 THEN 'Productive'
-        WHEN COUNT(al.AlbumId) >= 10 THEN 'Very Productive'
-    END AS IsProductive
-FROM artists a
-LEFT JOIN albums al ON a.ArtistId = al.ArtistId
-GROUP BY a.ArtistId LIMIT 100;
+SELECT Artist.Name, count(*) AS NbAlbums, 
+	CASE
+		WHEN count(*) = 1 THEN 'Unproductive'
+		WHEN count(*) > 1 AND count(*) < 10 THEN 'Productive'
+		ELSE 'Very Productive'
+	END as IsProductive
+FROM albums
+Join (SELECT * FROM artists) AS Artist ON albums.ArtistId = Artist.ArtistId
+GROUP BY Artist.ArtistId LIMIT 100;	
