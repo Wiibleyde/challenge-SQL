@@ -1,6 +1,6 @@
 SELECT
     i.InvoiceId,
-    SUM(ii.UnitPrice) / COUNT(ii.TrackId) AS 'Average Price',
+    ROUND(SUM(ii.UnitPrice) / COUNT(ii.TrackId),2) AS 'Average Price',
     SUM(t.Milliseconds) / 1000 AS 'Track Total Time',
     ROUND((SUM(ii.UnitPrice) / COUNT(ii.TrackId)) / (SUM(t.Milliseconds) / 1000), 5) || '€' AS 'Price by second'
 FROM invoices i
