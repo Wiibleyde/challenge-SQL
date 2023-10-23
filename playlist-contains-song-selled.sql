@@ -2,7 +2,7 @@ SELECT
     p.PlaylistId,
     p.Name,
     ROUND(
-        SUM(CASE WHEN il.Quantity >= 2 THEN 1 ELSE 0 END) * 100.0 / COUNT(pt.TrackId),
+        (COUNT(DISTINCT il.TrackId) * 100.0) / (SELECT COUNT(DISTINCT TrackId) FROM invoice_items),
         4
     ) AS "% song selled twice"
 FROM playlists p
