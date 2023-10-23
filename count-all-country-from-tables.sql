@@ -5,7 +5,6 @@ WITH AllCountries AS (
     UNION ALL
     SELECT BillingCountry AS Country FROM invoices
 )
-
 SELECT
     Country,
     COUNT(*) AS Total,
