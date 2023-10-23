@@ -1,4 +1,4 @@
-SELECT Country, COUNT(*) AS Count
+SELECT COUNT(*) AS Total, Country
 FROM (
     SELECT Country FROM employees
     UNION ALL
