@@ -1,3 +1,3 @@
-SELECT *
-FROM tracks
-WHERE GenreId IN (SELECT GenreId FROM genres WHERE Name IN (SELECT Title FROM albums));
+SELECT AlbumId, ArtistId, Title
+FROM albums
+WHERE Title IN (SELECT Name FROM genres);
