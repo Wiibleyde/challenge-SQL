@@ -1,4 +1,4 @@
-SELECT Tracks.Name AS ProductName
+SELECT Tracks.Name AS Name
 FROM Tracks
 JOIN (
     SELECT InvoiceId
