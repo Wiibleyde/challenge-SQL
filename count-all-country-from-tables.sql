@@ -1,16 +1,8 @@
-WITH AllCountries AS (
-    SELECT Country FROM employees
-    UNION ALL
-    SELECT Country FROM customers
-    UNION ALL
-    SELECT BillingCountry AS Country FROM invoices
-)
-
 SELECT
     Country,
-    COUNT(DISTINCT CASE WHEN TableName = 'employees' THEN RowId END) AS Employees,
-    COUNT(DISTINCT CASE WHEN TableName = 'customers' THEN RowId END) AS Customers,
-    COUNT(DISTINCT CASE WHEN TableName = 'invoices' THEN RowId END) AS Invoices,
+    COUNT(DISTINCT CASE WHEN TableName = 'employees' THEN RowId ELSE NULL END) AS Employees,
+    COUNT(DISTINCT CASE WHEN TableName = 'customers' THEN RowId ELSE NULL END) AS Customers,
+    COUNT(DISTINCT CASE WHEN TableName = 'invoices' THEN RowId ELSE NULL END) AS Invoices,
     COUNT(*) AS Total
 FROM (
     SELECT
