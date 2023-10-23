@@ -1,9 +1,9 @@
 SELECT
     i.InvoiceId,
-    SUM(ii.UnitPrice) / COUNT(ii.TrackId) AS "Average Cost by Songs",
-    SUM(t.Milliseconds) / 1000 AS "Total Length of Songs (Seconds)",
-	ROUND(SUM(ii.UnitPrice) / (SUM(t.Milliseconds) / 6000.0), 5) AS "Cost of Songs per Second (Euros/Second)"
+    SUM(ii.UnitPrice) / COUNT(ii.TrackId) AS 'Average Price',
+    SUM(t.Milliseconds) / 1000 AS 'Track Total Time',
+    ROUND((SUM(ii.UnitPrice) / COUNT(ii.TrackId)) / (SUM(t.Milliseconds) / 1000), 5) || '€' AS 'Price by second'
 FROM invoices i
-JOIN invoice_items ii ON i.InvoiceId = ii.InvoiceId
+JOIN invoice_items ii ON i.InvoiceId = ii.InvoiceId 
 JOIN tracks t ON ii.TrackId = t.TrackId
 GROUP BY i.InvoiceId;
