@@ -1,1 +1,10 @@
-SELECT t.* FROM tracks t WHERE t.AlbumId IN (SELECT a.AlbumId FROM albums a WHERE a.Title IN (SELECT g.Name FROM genres g));
+SELECT *
+FROM tracks
+WHERE AlbumId IN (
+    SELECT albums.AlbumId
+    FROM albums
+    WHERE albums.Title IN (
+        SELECT genres.Name
+        FROM genres
+    )
+);
