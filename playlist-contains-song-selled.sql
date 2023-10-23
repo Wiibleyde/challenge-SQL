@@ -1,7 +1,7 @@
 SELECT 
 	p.PlaylistId,
 	p.Name,
-	IFNULL(ROUND((SelledTwiceByPlaylist*1.0 / NbSongPlaylist*1.0) * 100.0, 3),0) AS '% song selled twice'
+	IFNULL(ROUND((SelledTwiceByPlaylist*1.0 / NbSongPlaylist*1.0) * 100.0, 4),0) AS '% song selled twice'
 FROM playlists p
     LEFT JOIN 
         (
