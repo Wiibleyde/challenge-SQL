@@ -1,13 +1,21 @@
+WITH SoldTwice AS (
+    SELECT
+        pt.PlaylistId,
+        il.TrackId
+    FROM invoice_items il
+    INNER JOIN playlist_track pt ON il.TrackId = pt.TrackId
+    WHERE il.Quantity >= 2
+)
+
 SELECT
-    pt.PlaylistId AS PlaylistId,
-    pt.Name AS PlaylistName,
-    ROUND(
-        (SUM(CASE WHEN il.InvoiceLineId IS NOT NULL THEN 1 ELSE 0 END) * 100.0) / COUNT(t.TrackId),
-        2
-    ) AS "% Song Sold Twice"
-FROM playlists AS pt
-JOIN playlist_track AS ptt ON pt.PlaylistId = ptt.PlaylistId
-JOIN tracks AS t ON ptt.TrackId = t.TrackId
-LEFT JOIN invoice_items AS il ON t.TrackId = il.TrackId
-GROUP BY pt.PlaylistId, pt.Name
-ORDER BY pt.PlaylistId;
+    p.PlaylistId,
+    p.Name,
+    ROUND(COALESCE(
+        (CAST(COUNT(st.TrackId) AS REAL) / CAST(COUNT(pt.TrackId) AS REAL)) * 100,
+        0
+    ), 4) AS "% song selled twice"
+FROM playlists p
+LEFT JOIN SoldTwice st ON p.PlaylistId = st.PlaylistId
+LEFT JOIN playlist_track pt ON p.PlaylistId = pt.PlaylistId
+GROUP BY p.PlaylistId, p.Name
+ORDER BY p.PlaylistId;
