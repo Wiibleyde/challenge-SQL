@@ -4,4 +4,4 @@ SELECT InvoiceId, Total,
         WHEN Total < 10 THEN 'Price lower than 10$'
         ELSE 'Price greater than 10$'
     END AS 'CASE' 
-FROM invoices;
+FROM invoices LIMIT 100;
