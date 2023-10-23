@@ -1,0 +1,1 @@
+SELECT c.FirstName AS FirstName, c.LastName AS LastName, c.Company AS Company, i.Total AS InvoiceTotalPrice FROM customers AS c INNER JOIN invoices AS i ON c.CustomerId = i.CustomerId WHERE c.Company IS NOT NULL;
