@@ -1,10 +1,3 @@
 SELECT *
 FROM tracks
-WHERE AlbumId IN (
-    SELECT albums.AlbumId
-    FROM albums
-    WHERE albums.Title IN (
-        SELECT genres.Name
-        FROM genres
-    )
-);
+WHERE GenreId IN (SELECT GenreId FROM genres WHERE Name IN (SELECT Title FROM albums));
