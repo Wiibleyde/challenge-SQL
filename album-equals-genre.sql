@@ -1,3 +1,1 @@
-SELECT t.* FROM tracks t
-JOIN albums a ON t.AlbumId = a.AlbumId
-JOIN genres g ON a.Title = g.Name;
+SELECT t.* FROM tracks t WHERE t.AlbumId IN (SELECT a.AlbumId FROM albums a WHERE a.Title IN (SELECT g.Name FROM genres g));
